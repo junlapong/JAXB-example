@@ -8,7 +8,10 @@
 	<name>JAXB example</name>
 
 	<properties>
-		<slf4j.version>1.6.1</slf4j.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<java.version>1.6</java.version>
+		<slf4j.version>1.7.21</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -17,7 +20,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
+			<version>4.12</version>
 		</dependency>
 
 		<!-- Logging -->
@@ -43,12 +46,10 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<scope>runtime</scope>
-			<version>1.2.16</version>
+			<version>1.2.17</version>
 		</dependency>
-		
+
 	</dependencies>
-
-
 
 	<build>
 		<testResources>
@@ -76,42 +77,47 @@
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.13.1</version>
 				<executions>
-						<execution>
-							<id>schema-generate</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-							<configuration>
-								<schemaDirectory>src/main/resources/</schemaDirectory>
-								<schemaIncludes>
-									<include>*.xsd</include>
-								</schemaIncludes>
-								<generateDirectory>generated-sources</generateDirectory>
-								<forceRegenerate>true</forceRegenerate>
-								<removeOldOutput>true</removeOldOutput>
-<!-- 
-								<generatePackage>com.test.contact</generatePackage>
- -->								
-							</configuration>
-						</execution>
+					<execution>
+						<id>schema-generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<schemaDirectory>src/main/resources/</schemaDirectory>
+							<schemaIncludes>
+								<include>*.xsd</include>
+							</schemaIncludes>
+							<generateDirectory>generated-sources</generateDirectory>
+							<forceRegenerate>false</forceRegenerate>
+							<removeOldOutput>true</removeOldOutput>
+							<!--
+							<generatePackage>com.test.contact</generatePackage>
+							-->
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.1</version>
+				<version>3.5.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+	                <compilerArgs>
+	                    <!-- <arg>-verbose</arg> -->
+	                    <arg>-Xlint:all</arg>
+	                </compilerArgs>
+	            </configuration>
 			</plugin>
 		</plugins>
 
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -122,15 +128,9 @@
 							<pluginExecutions>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>
-											org.jvnet.jaxb2.maven2
-										</groupId>
-										<artifactId>
-											maven-jaxb2-plugin
-										</artifactId>
-										<versionRange>
-											[0.8.1,)
-										</versionRange>
+										<groupId>org.jvnet.jaxb2.maven2</groupId>
+										<artifactId>maven-jaxb2-plugin</artifactId>
+										<versionRange>[0.8.1,)</versionRange>
 										<goals>
 											<goal>generate</goal>
 										</goals>

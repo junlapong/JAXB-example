@@ -1,2 +1,5 @@
-/generated-sources/org
+.setings/
+.classpath
+.project
+/generated-sources
 /target

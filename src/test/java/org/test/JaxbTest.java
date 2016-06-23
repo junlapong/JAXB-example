@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.test;
 
 import java.io.InputStream;
@@ -27,12 +24,11 @@ public class JaxbTest {
 	private Unmarshaller unmarshaller = null;
 	private Marshaller marshaller = null;
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(JaxbTest.class);
 
 	public JaxbTest() {
 		try {
-			jaxbContext = JAXBContext
-					.newInstance("org.test.response:org.test.contact:org.test.request");
+			jaxbContext = JAXBContext.newInstance("org.test.response:org.test.contact:org.test.request");
 			unmarshaller = jaxbContext.createUnmarshaller();
 			marshaller = jaxbContext.createMarshaller();
 		} catch (JAXBException e) {
@@ -42,12 +38,11 @@ public class JaxbTest {
 
 	@Test
 	public void testResponse() throws JAXBException {
-		JaxbTest xmgr = new JaxbTest();
 
+		JaxbTest xmgr = new JaxbTest();
 		InputStream fis = this.getClass().getClassLoader().getResourceAsStream("response.xml");
 
 		Object o = xmgr.loadXML(fis);
-
 		Response response = (Response) o;
 
 		for (Contact contact : response.getContacts().getContact()) {
@@ -56,27 +51,26 @@ public class JaxbTest {
 			logger.debug(contact.getLastname());
 			logger.debug(contact.getEmail());
 		}
-		
+
 //		Contact c = new Contact();
 //		c.setEmail("sdf");
 //
 //		Contacts contacts = new Contacts();
 //		contacts.getContact().add(c);
-//		
+//
 //		response.setContacts(contacts);
-		
+
 		xmgr.genXML(response, System.out);
 
-	}	
+	}
 
 	@Test
 	public void testRequest() throws JAXBException {
-		JaxbTest xmgr = new JaxbTest();
 
+		JaxbTest xmgr = new JaxbTest();
 		InputStream fis = this.getClass().getClassLoader().getResourceAsStream("request.xml");
 
 		Object o = xmgr.loadXML(fis);
-
 		Request request= (Request) o;
 
 		for (Contact contact : request.getContacts().getContact()) {
@@ -84,14 +78,14 @@ public class JaxbTest {
 			logger.debug(contact.getFirstname());
 			logger.debug(contact.getLastname());
 			logger.debug(contact.getEmail());
-			
+
 			contact.setEmail(contact.getEmail() + " UPDATED ");
 		}
-		
+
 		xmgr.genXML(request, System.out);
 
-	}	
-	
+	}
+
 	public Object loadXML(InputStream istrm) {
 		try {
 			Object o = unmarshaller.unmarshal(istrm);
